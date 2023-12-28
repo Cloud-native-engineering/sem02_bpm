@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0jgzqng" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="7821bea" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.3.0" camunda:diagramRelationId="4aa67244-3d97-422a-a724-7738a36b30d0">
   <bpmn:collaboration id="aws_ec2_order" name="aws_ec2_order">
-    <bpmn:documentation>Order process for an amazon webservices EC2 instance</bpmn:documentation>
+    <bpmn:documentation>Order process for an amazon webservices EC2 instance.</bpmn:documentation>
     <bpmn:participant id="internal_company" name="internal Company" processRef="internal_company_process" />
     <bpmn:participant id="customer" name="Customer" />
     <bpmn:participant id="aws" name="Amazon Web Services - AWS" />
