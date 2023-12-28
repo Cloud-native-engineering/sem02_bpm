@@ -9,6 +9,7 @@ on:
 jobs:
   deploy-resources:
     runs-on: ubuntu-latest
+    environment: camunda
 
     steps:
       - uses: actions/checkout@v2
