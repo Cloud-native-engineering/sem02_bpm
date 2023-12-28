@@ -36,6 +36,6 @@ jobs:
           resourceDirectory: camunda
 ```
 
-Diese Pipeline wird automatisch ausgeführt, sobald ein Push auf die Branches 'dev' oder 'main' erfolgt. Zusätzlich ist es erforderlich, dass sich der Inhalt des Camunda-Ordners ändert. Die für die Pipeline erforderlichen Credentials sind bei GitHub als '[Actions Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions)' hinterlegt und sind für Benutzer und Mitwirkende nicht einsehbar. Sie können ausschliesslich von der Pipeline selbst gelesen und verwendet werden.
+Diese Pipeline wird automatisch ausgeführt, sobald ein Push auf die Branches 'dev' oder 'main' erfolgt. Zusätzlich ist es erforderlich, dass sich der Inhalt des Camunda-Ordners ändert. Die für die Pipeline erforderlichen Credentials sind bei GitHub als '[Actions Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions)' hinterlegt und sind für Benutzer und Mitwirkende nicht einsehbar. Sie können ausschliesslich von der Pipeline selbst gelesen und verwendet werden. Zusätzlich muss ein zugelassener Admin den RUN bestätigen und es gibt einen Timer von 15 min.
 
-Folgend ein Beispiel eines Pipeline Runs: [GitHub Actions Pipeline Run](https://github.com/Cloud-native-engineering/sem02_bpm/actions/runs/7329356179)
+Folgend ein Beispiel eines Pipeline Runs: [GitHub Actions Pipeline Run](https://github.com/Cloud-native-engineering/sem02_bpm/actions/runs/7346844833)
