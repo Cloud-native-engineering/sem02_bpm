@@ -1,0 +1,465 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.3.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "7821bea"
+  },
+  "schemaVersion": 14,
+  "id": "ec2_order_add_costcenter",
+  "components": [
+    {
+      "text": "### Order an AWS EC2 Instance",
+      "type": "text",
+      "layout": {
+        "row": "row_1",
+        "col": "auto"
+      },
+      "id": "Heading_1"
+    },
+    {
+      "text": "Please complete the following information to initiate the order process for an EC2 instance. Your attention to detail is crucial for the accurate provisioning of resources. Kindly provide comprehensive information to ensure a smooth and efficient deployment. If you have any questions or require assistance, please do not hesitate to reach out to [aws.support@testcorp.com](mailto:aws.support@testcorp.com). Thank you for your cooperation.",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_1dzutio",
+        "columns": null
+      },
+      "id": "Field_0dx7sos"
+    },
+    {
+      "label": "Surname",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1fi5c31",
+        "columns": 5
+      },
+      "id": "Field_15t1l97",
+      "key": "surname",
+      "validate": {
+        "required": true
+      },
+      "readonly": true
+    },
+    {
+      "label": "Lastname",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1fi5c31",
+        "columns": 5
+      },
+      "id": "Field_018niub",
+      "key": "lastname",
+      "validate": {
+        "required": true
+      },
+      "readonly": true
+    },
+    {
+      "values": [
+        {
+          "label": "IT Webshop Development",
+          "value": "it_webshop_development"
+        },
+        {
+          "label": "IT Webshop Operations",
+          "value": "it_webshop_operations"
+        },
+        {
+          "label": "IT Security",
+          "value": "it_security"
+        },
+        {
+          "label": "IT Database Engineering",
+          "value": "it_database_engineering"
+        }
+      ],
+      "label": "Department",
+      "type": "select",
+      "layout": {
+        "row": "Row_1fi5c31",
+        "columns": null
+      },
+      "id": "Field_1or7b39",
+      "key": "department",
+      "validate": {
+        "required": true
+      },
+      "readonly": true
+    },
+    {
+      "label": "E-Mail",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_19r9tfc",
+        "columns": null
+      },
+      "id": "Field_1kcvkwd",
+      "key": "email",
+      "readonly": true,
+      "validate": {
+        "validationType": "email"
+      }
+    },
+    {
+      "label": "Description",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_0lbhz4i",
+        "columns": null
+      },
+      "id": "Field_1k4bnrx",
+      "key": "orderDescription",
+      "description": "why, what for do you need this incance?",
+      "validate": {
+        "required": true
+      },
+      "readonly": true
+    },
+    {
+      "height": 10,
+      "label": "Spacer",
+      "type": "spacer",
+      "layout": {
+        "row": "Row_1j0xlui",
+        "columns": null
+      },
+      "id": "Field_05vlrqi"
+    },
+    {
+      "text": "##### Instance Details",
+      "type": "text",
+      "layout": {
+        "row": "row_2",
+        "col": "auto"
+      },
+      "id": "Subheading_1"
+    },
+    {
+      "type": "textfield",
+      "layout": {
+        "row": "row_3",
+        "col": "auto"
+      },
+      "id": "Textfield_1",
+      "label": "Enter a name for the EC2 instance",
+      "key": "instanceName",
+      "validate": {
+        "required": true
+      },
+      "readonly": true
+    },
+    {
+      "values": [
+        {
+          "label": "Ubuntu",
+          "value": "ubuntu"
+        },
+        {
+          "label": "Amazon Linux 2",
+          "value": "amazonLinux2"
+        },
+        {
+          "label": "Windows Vista",
+          "value": "windowsVista"
+        }
+      ],
+      "label": "Operating System",
+      "type": "select",
+      "layout": {
+        "row": "Row_0tydi16",
+        "columns": null
+      },
+      "id": "Field_1mdvt30",
+      "key": "ami",
+      "defaultValue": "ubuntu",
+      "readonly": true
+    },
+    {
+      "values": [
+        {
+          "value": "t3.micro",
+          "label": "t3.micro"
+        },
+        {
+          "value": "t3.small",
+          "label": "t3.small"
+        },
+        {
+          "value": "t3.medium",
+          "label": "t3.medium"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "row_4",
+        "col": "auto"
+      },
+      "id": "Select_1",
+      "label": "Select the instance type",
+      "key": "instanceType",
+      "defaultValue": "t2.micro",
+      "validate": {
+        "required": true
+      },
+      "readonly": true
+    },
+    {
+      "values": [
+        {
+          "label": "Development",
+          "value": "dev"
+        },
+        {
+          "label": "Testing",
+          "value": "test"
+        },
+        {
+          "label": "Integration",
+          "value": "int"
+        },
+        {
+          "label": "Production",
+          "value": "prod"
+        }
+      ],
+      "label": "Environment",
+      "type": "select",
+      "layout": {
+        "row": "row_4",
+        "columns": null
+      },
+      "id": "Field_0gkzkld",
+      "key": "environment",
+      "validate": {
+        "required": true
+      },
+      "readonly": true
+    },
+    {
+      "values": [
+        {
+          "label": "eu-central-1a - subnet01",
+          "value": "eu-central-1a-01"
+        },
+        {
+          "label": "eu-central-1a - subnet02",
+          "value": "eu-central-1a-02"
+        },
+        {
+          "label": "eu-central-1b - subnet01",
+          "value": "eu-central-1b-01"
+        },
+        {
+          "label": "eu-central-1c - subnet01",
+          "value": "eu-central-1c-01"
+        }
+      ],
+      "label": "Select the subnet",
+      "type": "select",
+      "layout": {
+        "row": "Row_1qux2lw",
+        "columns": null
+      },
+      "id": "Field_1ep3utm",
+      "key": "networkSubnet",
+      "validate": {
+        "required": true
+      },
+      "description": "In this subnet the ec2 will be deployed",
+      "defaultValue": "eu-central-1a-01",
+      "readonly": true
+    },
+    {
+      "values": [
+        {
+          "label": "SSH internal",
+          "value": "ssh_internal"
+        },
+        {
+          "label": "SSH public",
+          "value": "ssh_public"
+        },
+        {
+          "label": "HTTP internal",
+          "value": "http_internal"
+        },
+        {
+          "label": "HTTP public",
+          "value": "http_public"
+        },
+        {
+          "label": "HTTPS internal",
+          "value": "https_internal"
+        },
+        {
+          "label": "HTTPS public",
+          "value": "https_public"
+        }
+      ],
+      "label": "Enabled protocols",
+      "type": "taglist",
+      "layout": {
+        "row": "Row_1c0etrg",
+        "columns": 13
+      },
+      "id": "Field_1fygyzd",
+      "key": "firewallProfiles",
+      "description": "Select which firewall-profiles should be enabled",
+      "readonly": true
+    },
+    {
+      "label": "Public IP",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1c0etrg",
+        "columns": 3
+      },
+      "id": "Field_0iefyip",
+      "key": "publicIP",
+      "readonly": true
+    },
+    {
+      "text": "##### Cloud-Init Configuration",
+      "type": "text",
+      "layout": {
+        "row": "row_6",
+        "col": "auto"
+      },
+      "id": "Subheading_2"
+    },
+    {
+      "label": "Enter the cloud-init script",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_17jf05q",
+        "columns": null
+      },
+      "id": "Field_0zgv1p4",
+      "key": "userData",
+      "readonly": true
+    },
+    {
+      "height": 10,
+      "label": "Spacer",
+      "type": "spacer",
+      "layout": {
+        "row": "Row_0zen2ov",
+        "columns": null
+      },
+      "id": "Field_1bg9sak"
+    },
+    {
+      "text": "### Manager Approval",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0z15ftl",
+        "columns": null
+      },
+      "id": "Field_1wofpuy"
+    },
+    {
+      "label": "Comment",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_1shi19y",
+        "columns": null
+      },
+      "id": "Field_1aar7a7",
+      "key": "managerComment",
+      "validate": {
+        "required": false
+      },
+      "readonly": true
+    },
+    {
+      "height": 10,
+      "label": "Spacer",
+      "type": "spacer",
+      "layout": {
+        "row": "Row_1ti9ewv",
+        "columns": null
+      },
+      "id": "Field_1xvckfo"
+    },
+    {
+      "text": "### Finance Department",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_1f94x6x",
+        "columns": null
+      },
+      "id": "Field_1pbqf0v"
+    },
+    {
+      "text": "We have a transaction that requires the allocation of a cost center for proper accounting and financial tracking. Your prompt attention to this matter is essential for maintaining accurate records and ensuring transparency in our financial processes.",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_0583w1r",
+        "columns": null
+      },
+      "id": "Field_0myap6r"
+    },
+    {
+      "label": "Comment",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_05q7u2z",
+        "columns": null
+      },
+      "id": "Field_1wu8vcj",
+      "key": "financeComment"
+    },
+    {
+      "values": [
+        {
+          "label": "IT Main",
+          "value": "it_main"
+        },
+        {
+          "label": "IT Operations",
+          "value": "it_operations"
+        },
+        {
+          "label": "Product Webshop",
+          "value": "product_webshop"
+        },
+        {
+          "label": "Project Websho 2.0",
+          "value": "project_webshop_2"
+        }
+      ],
+      "label": "Select Costcenter",
+      "type": "select",
+      "layout": {
+        "row": "Row_10cpqaf",
+        "columns": null
+      },
+      "id": "Field_1fcaojr",
+      "key": "costcenter",
+      "searchable": true,
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "Row_10cpqaf",
+        "col": "auto",
+        "columns": 8
+      },
+      "id": "Button_1",
+      "label": "Close Task",
+      "properties": {
+        "financeUserTask": "true"
+      }
+    }
+  ],
+  "generated": true,
+  "type": "default"
+}

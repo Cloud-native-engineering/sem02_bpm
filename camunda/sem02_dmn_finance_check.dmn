@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="finance_check" name="finance check" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Web Modeler" exporterVersion="fb9046d" camunda:diagramRelationId="f494fe2a-d77a-4213-bc7c-a0cdb10a5ce6" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.3.0">
+  <decision id="check_balance" name="Check balance">
+    <informationRequirement id="InformationRequirement_0ytzv6g">
+      <requiredInput href="#input_costcenterBudget" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0xmpnf4">
+      <requiredDecision href="#instancePrice" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_07639w4" hitPolicy="FIRST" biodi:annotationsWidth="400">
+      <input id="InputClause_0t62jdb" label="fincanceCalc">
+        <inputExpression id="LiteralExpression_1krcvxp" typeRef="number">
+          <text>costcenterBudget - instancePrice</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="enoughBalance" name="enoughBalance" typeRef="boolean" />
+      <output id="OutputClause_0hq74ax" label="instancePrice" name="instancePrice" typeRef="number" />
+      <rule id="DecisionRule_16wttqr">
+        <description>Enough Money to buy the EC2</description>
+        <inputEntry id="UnaryTests_0mnn9wn">
+          <text>&lt; 0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0prbzxb">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0j4qmzr">
+          <text>instancePrice</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_13q3guu">
+        <description>NOT enough Money to buy the EC2</description>
+        <inputEntry id="UnaryTests_1vp7so9">
+          <text>&gt;= 0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_146k4mf">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1uneae1">
+          <text>instancePrice</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="instancePrice" name="Lookup instancePrice">
+    <informationRequirement id="InformationRequirement_0jo9m25">
+      <requiredInput href="#input_instanceType" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1nnxdys" hitPolicy="FIRST">
+      <input id="InputClause_1kk52se" label="instanceType">
+        <inputExpression id="LiteralExpression_0jice9q" typeRef="string">
+          <text>instanceType</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0gmcp0n">
+          <text></text>
+        </inputValues>
+      </input>
+      <output id="OutputClause_1rkitph" label="instancePrice" name="instancePrice" typeRef="number" />
+      <rule id="DecisionRule_0j7qhms">
+        <inputEntry id="UnaryTests_00ieo87">
+          <text>"t3.micro"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1be2is0">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vh90ah">
+        <inputEntry id="UnaryTests_0vc4onk">
+          <text>"t3.small"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_064k0as">
+          <text>50</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ntbzre">
+        <inputEntry id="UnaryTests_0lrip6z">
+          <text>"t3.medium"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1rdanab">
+          <text>100</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="input_instanceType" name="instanceType" />
+  <inputData id="input_costcenterBudget" name="costcenterBudget" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="check_balance">
+        <dc:Bounds height="80" width="180" x="350" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_09fnz6w" dmnElementRef="instancePrice">
+        <dc:Bounds height="80" width="180" x="200" y="280" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_160cjig" dmnElementRef="input_instanceType">
+        <dc:Bounds height="45" width="125" x="158" y="437" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_100ngtg" dmnElementRef="InformationRequirement_0jo9m25">
+        <di:waypoint x="221" y="437" />
+        <di:waypoint x="290" y="380" />
+        <di:waypoint x="290" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1p7x6mb" dmnElementRef="input_costcenterBudget">
+        <dc:Bounds height="45" width="125" x="507" y="297" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0li05ze" dmnElementRef="InformationRequirement_0ytzv6g">
+        <di:waypoint x="570" y="297" />
+        <di:waypoint x="470" y="200" />
+        <di:waypoint x="470" y="180" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0g4xqz4" dmnElementRef="InformationRequirement_0xmpnf4">
+        <di:waypoint x="290" y="280" />
+        <di:waypoint x="410" y="200" />
+        <di:waypoint x="410" y="180" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

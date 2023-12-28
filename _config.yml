@@ -1,0 +1,11 @@
+title: Business process management
+description: "Prozessautomatisierung für EC2-Instanzen in AWS: Ein einheitlicher Ansatz"
+remote_theme: just-the-docs/just-the-docs
+favicon_ico: "/resources/images/favicon.ico"
+
+url: https://cloud-native-engineering.github.io/sem02_bpm
+
+aux_links:
+  Projektplanung: https://itcne23.atlassian.net/jira/software/projects/BPM
+
+footer_content: "Copyright &copy; 2023 Yves Wetter. Veröffentlicht mit einer <a href=\"https://github.com/Cloud-native-engineering/sem02_bpm/tree/main/LICENSE.md\">Creative Commons Attribution-ShareAlike 3.0 Switzerland License</a> Lizenz."

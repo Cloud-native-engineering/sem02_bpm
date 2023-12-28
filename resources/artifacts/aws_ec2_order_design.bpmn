@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0jgzqng" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="7821bea" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0" camunda:diagramRelationId="4aa67244-3d97-422a-a724-7738a36b30d0">
+  <bpmn:collaboration id="aws_ec2_order">
+    <bpmn:documentation>Order process for an amazon webservices EC2 instance</bpmn:documentation>
+    <bpmn:participant id="internal_company" name="internal Company" processRef="Process_ni3e72n" />
+    <bpmn:participant id="customer" name="Customer" />
+    <bpmn:participant id="aws" name="Amazon Web Services - AWS" />
+    <bpmn:messageFlow id="Flow_1m400gd" sourceRef="send_feedback_manager" targetRef="customer" />
+    <bpmn:messageFlow id="Flow_1c9wndc" sourceRef="inform_customer_sucessfull" targetRef="customer" />
+    <bpmn:messageFlow id="Flow_1o93nv5" sourceRef="inform_customer_failed" targetRef="customer" />
+    <bpmn:messageFlow id="Flow_1rvyqk5" sourceRef="send_order_to_sqs" targetRef="aws" />
+    <bpmn:messageFlow id="Flow_0t03xax" sourceRef="aws" targetRef="wait_4_aws" />
+    <bpmn:messageFlow id="Flow_163izg1" sourceRef="customer" targetRef="start_order_received" />
+    <bpmn:messageFlow id="Flow_0gderis" sourceRef="Activity_0ugw3h4" targetRef="customer" />
+    <bpmn:messageFlow id="Flow_17yl62k" sourceRef="Activity_1mv8id8" targetRef="aws" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_ni3e72n" name="internal company process" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0bs8ebl">
+      <bpmn:lane id="line_manager" name="Line Manager">
+        <bpmn:flowNodeRef>gateway_order_approved</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>cancel_order_manager</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>end_declined_manager</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>manager_revoke_approval_process</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0oq2tnn</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>end_reminder_sent_manager</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>send_reminder_manager</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>send_feedback_manager</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>processing_reminder_manager</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>start_order_received</bpmn:flowNodeRef>
+        <bpmn:childLaneSet id="LaneSet_1yzhtqk">
+          <bpmn:lane id="lane_line_manager">
+            <bpmn:flowNodeRef>gateway_order_approved</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>cancel_order_manager</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>end_declined_manager</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>manager_revoke_approval_process</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Activity_0oq2tnn</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>end_reminder_sent_manager</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>send_reminder_manager</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>send_feedback_manager</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>processing_reminder_manager</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>start_order_received</bpmn:flowNodeRef>
+          </bpmn:lane>
+        </bpmn:childLaneSet>
+      </bpmn:lane>
+      <bpmn:lane id="lane_finance" name="Finance Departement">
+        <bpmn:flowNodeRef>add_costcenter</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>end_reminder_sent_finance</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>gateway_enough_budget</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>end_financial_not_possible</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0ugw3h4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>wait_4_aws</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>gateway_processing_sucessfull</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1jl9gxb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>send_reminder_finance</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>processing_reminder_finance</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0midp1t</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_034mrsv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0x3ppmt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>lookup_ec2_price</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>check_balance</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>cancel_order_finance</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1mv8id8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>lookup_costcenter_balance</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>deduct_ec2_price_from_budget</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>fix_buget_state</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>send_order_to_sqs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>fix_ec2_state</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>inform_customer_failed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>inform_customer_sucessfull</bpmn:flowNodeRef>
+        <bpmn:childLaneSet id="LaneSet_0izx5b1">
+          <bpmn:lane id="lane_finance_departement">
+            <bpmn:flowNodeRef>add_costcenter</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>end_reminder_sent_finance</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>gateway_enough_budget</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>end_financial_not_possible</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Activity_0ugw3h4</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>wait_4_aws</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>gateway_processing_sucessfull</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Event_1jl9gxb</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>send_reminder_finance</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>processing_reminder_finance</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Event_0midp1t</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Event_034mrsv</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Activity_0x3ppmt</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>lookup_ec2_price</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>check_balance</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>cancel_order_finance</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Activity_1mv8id8</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>lookup_costcenter_balance</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>deduct_ec2_price_from_budget</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>fix_buget_state</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>send_order_to_sqs</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>fix_ec2_state</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>inform_customer_failed</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>inform_customer_sucessfull</bpmn:flowNodeRef>
+          </bpmn:lane>
+        </bpmn:childLaneSet>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:exclusiveGateway id="gateway_order_approved" name="Approved?">
+      <bpmn:incoming>Flow_0g729ia</bpmn:incoming>
+      <bpmn:outgoing>Flow_04phqw9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1p499p7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="cancel_order_manager" name="Cancel order">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04phqw9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0g8jsnm</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="end_declined_manager" name="Order declined, Line Manager">
+      <bpmn:incoming>Flow_0rc4quq</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="add_costcenter" name="Add costcenter">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formKey="sem02_bpm_start_order" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1p499p7</bpmn:incoming>
+      <bpmn:outgoing>Flow_07h7ib4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="end_reminder_sent_finance" name="Reminder send">
+      <bpmn:incoming>Flow_000ejlz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="gateway_enough_budget" name="Enough balance?">
+      <bpmn:incoming>Flow_1j0eu5v</bpmn:incoming>
+      <bpmn:outgoing>Flow_0sgfwau</bpmn:outgoing>
+      <bpmn:outgoing>Flow_05wgz8k</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="end_financial_not_possible" name="Order closed, financial not possible">
+      <bpmn:incoming>Flow_0esfb45</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:subProcess id="manager_revoke_approval_process" name="Manager revoke approval" triggeredByEvent="true">
+      <bpmn:startEvent id="start_manager_revoke_approval" name="Manager revoke approval">
+        <bpmn:outgoing>Flow_1jxidto</bpmn:outgoing>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_1r75i8b" />
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1jxidto" sourceRef="start_manager_revoke_approval" targetRef="revoke_approval" />
+      <bpmn:sequenceFlow id="Flow_06pwndc" sourceRef="revoke_approval" targetRef="coordinate_revokation" />
+      <bpmn:userTask id="coordinate_revokation" name="Coordinate revokation of approval">
+        <bpmn:incoming>Flow_06pwndc</bpmn:incoming>
+        <bpmn:outgoing>Flow_043ro08</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:endEvent id="end_approval_revoked" name="Order approval revoked">
+        <bpmn:incoming>Flow_043ro08</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_043ro08" sourceRef="coordinate_revokation" targetRef="end_approval_revoked" />
+      <bpmn:intermediateThrowEvent id="revoke_approval" name="Undo order">
+        <bpmn:incoming>Flow_1jxidto</bpmn:incoming>
+        <bpmn:outgoing>Flow_06pwndc</bpmn:outgoing>
+        <bpmn:compensateEventDefinition id="CompensateEventDefinition_178150j" />
+      </bpmn:intermediateThrowEvent>
+    </bpmn:subProcess>
+    <bpmn:boundaryEvent id="processing_reminder_finance" name="Processing reminder" cancelActivity="false" attachedToRef="add_costcenter">
+      <bpmn:outgoing>Flow_0us6tog</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1ehtxor">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_03dx53c" sourceRef="start_order_received" targetRef="Activity_0oq2tnn" />
+    <bpmn:sequenceFlow id="Flow_0g729ia" sourceRef="Activity_0oq2tnn" targetRef="gateway_order_approved" />
+    <bpmn:sequenceFlow id="Flow_0psaben" sourceRef="send_reminder_manager" targetRef="end_reminder_sent_manager" />
+    <bpmn:sequenceFlow id="Flow_0u7z1g1" sourceRef="processing_reminder_manager" targetRef="send_reminder_manager" />
+    <bpmn:sequenceFlow id="Flow_04phqw9" name="No" sourceRef="gateway_order_approved" targetRef="cancel_order_manager">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=managerApproval = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1p499p7" name="Yes" sourceRef="gateway_order_approved" targetRef="add_costcenter">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=managerApproval = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0g8jsnm" sourceRef="cancel_order_manager" targetRef="send_feedback_manager" />
+    <bpmn:sequenceFlow id="Flow_0rc4quq" sourceRef="send_feedback_manager" targetRef="end_declined_manager" />
+    <bpmn:sequenceFlow id="Flow_07h7ib4" sourceRef="add_costcenter" targetRef="lookup_ec2_price" />
+    <bpmn:sequenceFlow id="Flow_0us6tog" sourceRef="processing_reminder_finance" targetRef="send_reminder_finance" />
+    <bpmn:sequenceFlow id="Flow_000ejlz" sourceRef="send_reminder_finance" targetRef="end_reminder_sent_finance" />
+    <bpmn:sequenceFlow id="Flow_14wm3ed" sourceRef="lookup_ec2_price" targetRef="lookup_costcenter_balance" />
+    <bpmn:sequenceFlow id="Flow_1yk2hua" sourceRef="lookup_costcenter_balance" targetRef="check_balance" />
+    <bpmn:sequenceFlow id="Flow_1j0eu5v" sourceRef="check_balance" targetRef="gateway_enough_budget" />
+    <bpmn:sequenceFlow id="Flow_0sgfwau" name="No" sourceRef="gateway_enough_budget" targetRef="cancel_order_finance">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=enoughBalance = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_05wgz8k" name="Yes" sourceRef="gateway_enough_budget" targetRef="deduct_ec2_price_from_budget">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=enoughBalance = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0emmvq0" sourceRef="cancel_order_finance" targetRef="Activity_0ugw3h4" />
+    <bpmn:sequenceFlow id="Flow_0esfb45" sourceRef="Activity_0ugw3h4" targetRef="end_financial_not_possible" />
+    <bpmn:userTask id="Activity_0oq2tnn" name="Review order">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formKey="sem02_bpm_start_order" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03dx53c</bpmn:incoming>
+      <bpmn:outgoing>Flow_0g729ia</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="processing_reminder_manager" name="Processing reminder" cancelActivity="false" attachedToRef="Activity_0oq2tnn">
+      <bpmn:outgoing>Flow_0u7z1g1</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1cixgjp">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="end_reminder_sent_manager" name="Reminder sent">
+      <bpmn:incoming>Flow_0psaben</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="send_reminder_manager" name="Send reminder">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input target="apiKey" />
+          <zeebe:input target="from.name" />
+          <zeebe:input target="from.email" />
+          <zeebe:input target="to.name" />
+          <zeebe:input target="to.email" />
+          <zeebe:input source="mail" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input target="content.subject" />
+          <zeebe:input source="text/plain" target="content.type" />
+          <zeebe:input target="content.value" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders />
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0u7z1g1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0psaben</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="send_feedback_manager" name="Send feedback">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" />
+        <zeebe:ioMapping>
+          <zeebe:input target="apiKey" />
+          <zeebe:input target="from.name" />
+          <zeebe:input target="from.email" />
+          <zeebe:input target="to.name" />
+          <zeebe:input target="to.email" />
+          <zeebe:input source="mail" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input target="content.subject" />
+          <zeebe:input source="text/plain" target="content.type" />
+          <zeebe:input target="content.value" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0g8jsnm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rc4quq</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="Activity_0ugw3h4" name="Send feedback">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" />
+        <zeebe:ioMapping>
+          <zeebe:input target="apiKey" />
+          <zeebe:input target="from.name" />
+          <zeebe:input target="from.email" />
+          <zeebe:input target="to.name" />
+          <zeebe:input target="to.email" />
+          <zeebe:input source="mail" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input target="content.subject" />
+          <zeebe:input source="text/plain" target="content.type" />
+          <zeebe:input target="content.value" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0emmvq0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0esfb45</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:intermediateCatchEvent id="wait_4_aws" name="Wait for processing feedback">
+      <bpmn:incoming>Flow_1oilipb</bpmn:incoming>
+      <bpmn:outgoing>Flow_0rblcn9</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1sobvax" messageRef="Message_1baeeui" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="gateway_processing_sucessfull" name="Sucessfull processing">
+      <bpmn:incoming>Flow_0rblcn9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1euc9n1</bpmn:outgoing>
+      <bpmn:outgoing>Flow_02xy30v</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0rblcn9" sourceRef="wait_4_aws" targetRef="gateway_processing_sucessfull" />
+    <bpmn:sequenceFlow id="Flow_1euc9n1" name="Yes" sourceRef="gateway_processing_sucessfull" targetRef="inform_customer_sucessfull">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=awsDeploymentSucessfull = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_02rrkjl" sourceRef="inform_customer_failed" targetRef="Event_034mrsv" />
+    <bpmn:sequenceFlow id="Flow_138utlx" sourceRef="inform_customer_sucessfull" targetRef="Event_1jl9gxb" />
+    <bpmn:endEvent id="Event_1jl9gxb" name="Order closed, deployed">
+      <bpmn:incoming>Flow_138utlx</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="send_reminder_finance" name="Send reminder">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" />
+        <zeebe:ioMapping>
+          <zeebe:input target="apiKey" />
+          <zeebe:input target="from.name" />
+          <zeebe:input target="from.email" />
+          <zeebe:input target="to.name" />
+          <zeebe:input target="to.email" />
+          <zeebe:input source="mail" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input target="content.subject" />
+          <zeebe:input source="text/plain" target="content.type" />
+          <zeebe:input target="content.value" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0us6tog</bpmn:incoming>
+      <bpmn:outgoing>Flow_000ejlz</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:startEvent id="start_order_received" name="Order recived">
+      <bpmn:extensionElements>
+        <zeebe:properties />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_03dx53c</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1oilipb" sourceRef="send_order_to_sqs" targetRef="wait_4_aws" />
+    <bpmn:sequenceFlow id="Flow_073mijs" sourceRef="deduct_ec2_price_from_budget" targetRef="send_order_to_sqs" />
+    <bpmn:sequenceFlow id="Flow_02xy30v" sourceRef="gateway_processing_sucessfull" targetRef="Event_0midp1t" />
+    <bpmn:intermediateThrowEvent id="Event_0midp1t">
+      <bpmn:incoming>Flow_02xy30v</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pagvcc</bpmn:outgoing>
+      <bpmn:compensateEventDefinition id="CompensateEventDefinition_05kev78" activityRef="deduct_ec2_price_from_budget" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_1pagvcc" sourceRef="Event_0midp1t" targetRef="inform_customer_failed" />
+    <bpmn:endEvent id="Event_034mrsv" name="Order closed, deployment failed">
+      <bpmn:incoming>Flow_02rrkjl</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_0x3ppmt" name="undo deduction" isForCompensation="true" />
+    <bpmn:businessRuleTask id="lookup_ec2_price" name="Lookup EC2 price">
+      <bpmn:incoming>Flow_07h7ib4</bpmn:incoming>
+      <bpmn:outgoing>Flow_14wm3ed</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:businessRuleTask id="check_balance" name="Check balance">
+      <bpmn:incoming>Flow_1yk2hua</bpmn:incoming>
+      <bpmn:outgoing>Flow_1j0eu5v</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:serviceTask id="cancel_order_finance" name="Cancel order">
+      <bpmn:incoming>Flow_0sgfwau</bpmn:incoming>
+      <bpmn:outgoing>Flow_0emmvq0</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_1mv8id8" name="Delete EC2" isForCompensation="true" />
+    <bpmn:serviceTask id="lookup_costcenter_balance" name="Lookup costcenter balance">
+      <bpmn:incoming>Flow_14wm3ed</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yk2hua</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="deduct_ec2_price_from_budget" name="Deduct EC2 price from budget">
+      <bpmn:incoming>Flow_05wgz8k</bpmn:incoming>
+      <bpmn:outgoing>Flow_073mijs</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="fix_buget_state" attachedToRef="deduct_ec2_price_from_budget">
+      <bpmn:compensateEventDefinition id="CompensateEventDefinition_1ixo3la" />
+    </bpmn:boundaryEvent>
+    <bpmn:serviceTask id="send_order_to_sqs" name="Send order to AWS SQS">
+      <bpmn:incoming>Flow_073mijs</bpmn:incoming>
+      <bpmn:outgoing>Flow_1oilipb</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="fix_ec2_state" attachedToRef="send_order_to_sqs">
+      <bpmn:compensateEventDefinition id="CompensateEventDefinition_1ylytd0" />
+    </bpmn:boundaryEvent>
+    <bpmn:sendTask id="inform_customer_failed" name="Inform customer">
+      <bpmn:incoming>Flow_1pagvcc</bpmn:incoming>
+      <bpmn:outgoing>Flow_02rrkjl</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="inform_customer_sucessfull" name="Inform customer">
+      <bpmn:incoming>Flow_1euc9n1</bpmn:incoming>
+      <bpmn:outgoing>Flow_138utlx</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:textAnnotation id="TextAnnotation_057ngcf">
+      <bpmn:text>Local DMN</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_18o4t8z">
+      <bpmn:text>Lookup from DymamoDB</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1uhlzxl" sourceRef="lookup_ec2_price" targetRef="TextAnnotation_057ngcf" />
+    <bpmn:association id="Association_13wqg7k" sourceRef="lookup_costcenter_balance" targetRef="TextAnnotation_18o4t8z" />
+    <bpmn:association id="Association_1fybkvk" associationDirection="One" sourceRef="fix_buget_state" targetRef="Activity_0x3ppmt" />
+    <bpmn:association id="Association_1ggdsdn" associationDirection="One" sourceRef="fix_ec2_state" targetRef="Activity_1mv8id8" />
+  </bpmn:process>
+  <bpmn:message id="Message_1baeeui" name="sqsOrderId">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=orderID defined(value)" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:error id="Error_1ibp0de" name="Order closed -  deployment failed" errorCode="closed_deployment_failed" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="aws_ec2_order">
+      <bpmndi:BPMNShape id="Participant_02c7icd_di" bpmnElement="internal_company" isHorizontal="true">
+        <dc:Bounds x="160" y="152" width="2288" height="1048" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0sydtgc_di" bpmnElement="lane_finance" isHorizontal="true">
+        <dc:Bounds x="190" y="552" width="2258" height="648" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_06dypzx_di" bpmnElement="lane_finance_departement" isHorizontal="true">
+        <dc:Bounds x="220" y="552" width="2228" height="648" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1u2hrwu_di" bpmnElement="line_manager" isHorizontal="true">
+        <dc:Bounds x="190" y="152" width="2258" height="400" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0fug63t_di" bpmnElement="lane_line_manager" isHorizontal="true">
+        <dc:Bounds x="220" y="152" width="2228" height="400" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_042l7sa_di" bpmnElement="gateway_order_approved" isMarkerVisible="true">
+        <dc:Bounds x="695" y="190" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="694" y="166" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0pyxn9d_di" bpmnElement="cancel_order_manager">
+        <dc:Bounds x="850" y="175" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0u4rouc_di" bpmnElement="end_declined_manager" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1272" y="197" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1254" y="240" width="76" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bjtptg_di" bpmnElement="add_costcenter">
+        <dc:Bounds x="670" y="675" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19hjr6b_di" bpmnElement="end_reminder_sent_finance">
+        <dc:Bounds x="892" y="817" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="873" y="860" width="75" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1csiw5p_di" bpmnElement="gateway_enough_budget" isMarkerVisible="true">
+        <dc:Bounds x="1275" y="690" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1257" y="666" width="86" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yq8xtp_di" bpmnElement="end_financial_not_possible" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1702" y="697" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1687" y="740" width="67" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mmw3bi_di" bpmnElement="manager_revoke_approval_process" isExpanded="true">
+        <dc:Bounds x="880" y="315" width="530" height="195" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_085a5mu_di" bpmnElement="start_manager_revoke_approval">
+        <dc:Bounds x="920" y="397" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="898" y="440" width="80" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0h2ez61_di" bpmnElement="coordinate_revokation">
+        <dc:Bounds x="1110" y="375" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1a82ckh_di" bpmnElement="end_approval_revoked" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1272" y="397" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1255" y="440" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0x0y0hi_di" bpmnElement="revoke_approval">
+        <dc:Bounds x="1012" y="397" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1004" y="440" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1jxidto_di" bpmnElement="Flow_1jxidto">
+        <di:waypoint x="956" y="415" />
+        <di:waypoint x="1012" y="415" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06pwndc_di" bpmnElement="Flow_06pwndc">
+        <di:waypoint x="1048" y="415" />
+        <di:waypoint x="1110" y="415" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_043ro08_di" bpmnElement="Flow_043ro08">
+        <di:waypoint x="1210" y="415" />
+        <di:waypoint x="1272" y="415" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0i28y9c_di" bpmnElement="Activity_0oq2tnn">
+        <dc:Bounds x="400" y="175" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_037fug3_di" bpmnElement="end_reminder_sent_manager">
+        <dc:Bounds x="612" y="317" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="594" y="360" width="72" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18bxghu_di" bpmnElement="send_reminder_manager">
+        <dc:Bounds x="460" y="295" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fzxkhm_di" bpmnElement="send_feedback_manager">
+        <dc:Bounds x="1060" y="175" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1parlsc_di" bpmnElement="Activity_0ugw3h4">
+        <dc:Bounds x="1540" y="675" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0lqhunj_di" bpmnElement="wait_4_aws">
+        <dc:Bounds x="1812" y="972" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1803" y="922" width="54" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0l6l29q_di" bpmnElement="gateway_processing_sucessfull" isMarkerVisible="true">
+        <dc:Bounds x="1915" y="965" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1915" y="935" width="54" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1jl9gxb_di" bpmnElement="Event_1jl9gxb" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="2332" y="1112" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2317" y="1155" width="67" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dfirv8_di" bpmnElement="send_reminder_finance">
+        <dc:Bounds x="740" y="795" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1rdc0a2_di" bpmnElement="start_order_received">
+        <dc:Bounds x="282" y="197" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="267" y="240" width="67" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0s1p8wk_di" bpmnElement="Event_0midp1t">
+        <dc:Bounds x="2062" y="972" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0s0643n_di" bpmnElement="Event_034mrsv" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="2332" y="972" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2309" y="1015" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1wlaorr_di" bpmnElement="Activity_0x3ppmt">
+        <dc:Bounds x="1550" y="830" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ezv0p8_di" bpmnElement="lookup_ec2_price">
+        <dc:Bounds x="820" y="675" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0c8nzx4_di" bpmnElement="check_balance">
+        <dc:Bounds x="1120" y="675" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cyend7_di" bpmnElement="cancel_order_finance">
+        <dc:Bounds x="1380" y="675" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mm5ojh_di" bpmnElement="Activity_1mv8id8">
+        <dc:Bounds x="1827" y="830" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xomvi9_di" bpmnElement="lookup_costcenter_balance">
+        <dc:Bounds x="970" y="675" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rmvdyc_di" bpmnElement="deduct_ec2_price_from_budget">
+        <dc:Bounds x="1380" y="950" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_008j8w6_di" bpmnElement="send_order_to_sqs">
+        <dc:Bounds x="1650" y="950" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vrb26u_di" bpmnElement="inform_customer_failed">
+        <dc:Bounds x="2160" y="950" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1d79wq1_di" bpmnElement="inform_customer_sucessfull">
+        <dc:Bounds x="2070" y="1090" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_057ngcf_di" bpmnElement="TextAnnotation_057ngcf">
+        <dc:Bounds x="920" y="595" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_18o4t8z_di" bpmnElement="TextAnnotation_18o4t8z">
+        <dc:Bounds x="1070" y="595" width="100" height="41" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fo4ud5_di" bpmnElement="fix_ec2_state">
+        <dc:Bounds x="1732" y="932" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1yslrrt_di" bpmnElement="fix_buget_state">
+        <dc:Bounds x="1462" y="932" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05v0j4u_di" bpmnElement="processing_reminder_manager">
+        <dc:Bounds x="382" y="237" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="331.5" y="261" width="55" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0nz17cn_di" bpmnElement="processing_reminder_finance">
+        <dc:Bounds x="652" y="737" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="586.5" y="741" width="55" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_03dx53c_di" bpmnElement="Flow_03dx53c">
+        <di:waypoint x="318" y="215" />
+        <di:waypoint x="400" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0g729ia_di" bpmnElement="Flow_0g729ia">
+        <di:waypoint x="500" y="215" />
+        <di:waypoint x="695" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0psaben_di" bpmnElement="Flow_0psaben">
+        <di:waypoint x="560" y="335" />
+        <di:waypoint x="612" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u7z1g1_di" bpmnElement="Flow_0u7z1g1">
+        <di:waypoint x="400" y="273" />
+        <di:waypoint x="400" y="335" />
+        <di:waypoint x="460" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04phqw9_di" bpmnElement="Flow_04phqw9">
+        <di:waypoint x="745" y="215" />
+        <di:waypoint x="850" y="215" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="762" y="197" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1p499p7_di" bpmnElement="Flow_1p499p7">
+        <di:waypoint x="720" y="240" />
+        <di:waypoint x="720" y="675" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="731" y="240" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0g8jsnm_di" bpmnElement="Flow_0g8jsnm">
+        <di:waypoint x="950" y="215" />
+        <di:waypoint x="1060" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rc4quq_di" bpmnElement="Flow_0rc4quq">
+        <di:waypoint x="1160" y="215" />
+        <di:waypoint x="1272" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07h7ib4_di" bpmnElement="Flow_07h7ib4">
+        <di:waypoint x="770" y="715" />
+        <di:waypoint x="820" y="715" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0us6tog_di" bpmnElement="Flow_0us6tog">
+        <di:waypoint x="670" y="773" />
+        <di:waypoint x="670" y="835" />
+        <di:waypoint x="740" y="835" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_000ejlz_di" bpmnElement="Flow_000ejlz">
+        <di:waypoint x="840" y="835" />
+        <di:waypoint x="892" y="835" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14wm3ed_di" bpmnElement="Flow_14wm3ed">
+        <di:waypoint x="920" y="715" />
+        <di:waypoint x="970" y="715" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yk2hua_di" bpmnElement="Flow_1yk2hua">
+        <di:waypoint x="1070" y="715" />
+        <di:waypoint x="1120" y="715" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j0eu5v_di" bpmnElement="Flow_1j0eu5v">
+        <di:waypoint x="1220" y="715" />
+        <di:waypoint x="1275" y="715" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0sgfwau_di" bpmnElement="Flow_0sgfwau">
+        <di:waypoint x="1325" y="715" />
+        <di:waypoint x="1380" y="715" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1332" y="697" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05wgz8k_di" bpmnElement="Flow_05wgz8k">
+        <di:waypoint x="1300" y="740" />
+        <di:waypoint x="1300" y="990" />
+        <di:waypoint x="1380" y="990" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1306" y="757" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0emmvq0_di" bpmnElement="Flow_0emmvq0">
+        <di:waypoint x="1480" y="715" />
+        <di:waypoint x="1540" y="715" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0esfb45_di" bpmnElement="Flow_0esfb45">
+        <di:waypoint x="1640" y="715" />
+        <di:waypoint x="1702" y="715" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rblcn9_di" bpmnElement="Flow_0rblcn9">
+        <di:waypoint x="1848" y="990" />
+        <di:waypoint x="1915" y="990" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1euc9n1_di" bpmnElement="Flow_1euc9n1">
+        <di:waypoint x="1940" y="1015" />
+        <di:waypoint x="1940" y="1130" />
+        <di:waypoint x="2070" y="1130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1946" y="1027" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02rrkjl_di" bpmnElement="Flow_02rrkjl">
+        <di:waypoint x="2260" y="990" />
+        <di:waypoint x="2332" y="990" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_138utlx_di" bpmnElement="Flow_138utlx">
+        <di:waypoint x="2170" y="1130" />
+        <di:waypoint x="2332" y="1130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1oilipb_di" bpmnElement="Flow_1oilipb">
+        <di:waypoint x="1750" y="990" />
+        <di:waypoint x="1812" y="990" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_073mijs_di" bpmnElement="Flow_073mijs">
+        <di:waypoint x="1480" y="990" />
+        <di:waypoint x="1650" y="990" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02xy30v_di" bpmnElement="Flow_02xy30v">
+        <di:waypoint x="1965" y="990" />
+        <di:waypoint x="2062" y="990" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pagvcc_di" bpmnElement="Flow_1pagvcc">
+        <di:waypoint x="2098" y="990" />
+        <di:waypoint x="2160" y="990" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1uhlzxl_di" bpmnElement="Association_1uhlzxl">
+        <di:waypoint x="908" y="675" />
+        <di:waypoint x="956" y="625" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_13wqg7k_di" bpmnElement="Association_13wqg7k">
+        <di:waypoint x="1058" y="675" />
+        <di:waypoint x="1095" y="636" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1fybkvk_di" bpmnElement="Association_1fybkvk">
+        <di:waypoint x="1480" y="932" />
+        <di:waypoint x="1480" y="870" />
+        <di:waypoint x="1550" y="870" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1ggdsdn_di" bpmnElement="Association_1ggdsdn">
+        <di:waypoint x="1750" y="932" />
+        <di:waypoint x="1750" y="870" />
+        <di:waypoint x="1827" y="870" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_14q8ihm_di" bpmnElement="customer" isHorizontal="true">
+        <dc:Bounds x="220" y="40" width="2228" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1cuef41" bpmnElement="aws" isHorizontal="true">
+        <dc:Bounds x="220" y="1230" width="2228" height="60" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1m400gd_di" bpmnElement="Flow_1m400gd">
+        <di:waypoint x="1110" y="175" />
+        <di:waypoint x="1110" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c9wndc_di" bpmnElement="Flow_1c9wndc">
+        <di:waypoint x="2120" y="1090" />
+        <di:waypoint x="2120" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o93nv5_di" bpmnElement="Flow_1o93nv5">
+        <di:waypoint x="2210" y="950" />
+        <di:waypoint x="2210" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rvyqk5_di" bpmnElement="Flow_1rvyqk5">
+        <di:waypoint x="1700" y="1030" />
+        <di:waypoint x="1700" y="1230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t03xax_di" bpmnElement="Flow_0t03xax">
+        <di:waypoint x="1830" y="1230" />
+        <di:waypoint x="1830" y="1008" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_163izg1_di" bpmnElement="Flow_163izg1">
+        <di:waypoint x="300" y="100" />
+        <di:waypoint x="300" y="197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gderis_di" bpmnElement="Flow_0gderis">
+        <di:waypoint x="1590" y="675" />
+        <di:waypoint x="1590" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17yl62k_di" bpmnElement="Flow_17yl62k">
+        <di:waypoint x="1877" y="910" />
+        <di:waypoint x="1877" y="1230" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
