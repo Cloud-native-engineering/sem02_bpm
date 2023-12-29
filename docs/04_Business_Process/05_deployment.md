@@ -31,7 +31,7 @@ jobs:
       - name: Deploy Updated Resources
         uses: camunda-community-hub/camunda-platform-8-github-action@master
         with:
-          clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
+          clientConfig:  {% raw %}${{ secrets.ZEEBE_CLIENT_CONFIG }}{% endraw %}
           operation: deployResource
           resourceDirectory: camunda
 ````
