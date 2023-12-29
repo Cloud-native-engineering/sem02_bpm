@@ -14,49 +14,71 @@ Das Management von AWS-Ressourcen, insbesondere die Erstellung und Bereitstellun
 
 [2.2. Projektorganisation](docs/02_Projektorganisation/projektorganisation.md)
 
-[2.3 Systemabgrenzung](docs/02_Projektorganisation/systemabgrenzung.md)
+[2.3 SWOT Analyse](docs/02_Projektorganisation/swot.md)
 
-[2.4 SWOT Analyse](docs/02_Projektorganisation/swot.md)
+[2.4 GIT Branching Konzept](docs/02_Projektorganisation/git_branching_konzept.md)
 
-[2.5 GIT Branching Konzept](docs/02_Projektorganisation/git_branching_konzept.md)
+[2.5 Tools & Software](docs/02_Projektorganisation/management.md)
 
-[2.6 Tools & Software](docs/02_Projektorganisation/management.md)
+[2.6 Sprint 01](docs/02_Projektorganisation/sprint01/index.md)
 
-[2.7 Sprint 01](docs/02_Projektorganisation/sprint01/index.md)
+[2.6.1 Sprint Planning](docs/02_Projektorganisation/sprint01/planning.md)
 
-[2.7.1 Sprint Planning](docs/02_Projektorganisation/sprint01/planning.md)
+[2.6.2 Backlog Refinement](docs/02_Projektorganisation/sprint01/refinement.md)
 
-[2.7.2 Backlog Refinement](docs/02_Projektorganisation/sprint01/refinement.md)
+[2.6.3 Sprint Review](docs/02_Projektorganisation/sprint01/review.md)
 
-[2.7.3 Sprint Review](docs/02_Projektorganisation/sprint01/review.md)
+[2.6.4 Sprint Retro](docs/02_Projektorganisation/sprint01/retro.md)
 
-[2.7.4 Sprint Retro](docs/02_Projektorganisation/sprint01/retro.md)
+[2.7 Sprint 02](docs/02_Projektorganisation/sprint02/index.md)
 
-[2.8 Sprint 02](docs/02_Projektorganisation/sprint02/index.md)
+[2.7.1 Sprint Planning](docs/02_Projektorganisation/sprint02/planning.md)
 
-[2.8.1 Sprint Planning](docs/02_Projektorganisation/sprint02/planning.md)
+[2.7.2 Backlog Refinement](docs/02_Projektorganisation/sprint02/refinement.md)
 
-[2.8.2 Backlog Refinement](docs/02_Projektorganisation/sprint02/refinement.md)
+[2.7.3 Sprint Review](docs/02_Projektorganisation/sprint02/review.md)
 
-[2.8.3 Sprint Review](docs/02_Projektorganisation/sprint02/review.md)
+[2.7.4 Sprint Retro](docs/02_Projektorganisation/sprint02/retro.md)
 
-[2.8.4 Sprint Retro](docs/02_Projektorganisation/sprint02/retro.md)
+[2.8 Sprint 03](docs/02_Projektorganisation/sprint03/index.md)
 
-[2.9 Sprint 03](docs/02_Projektorganisation/sprint03/index.md)
+[2.8.1 Sprint Planning](docs/02_Projektorganisation/sprint03/planning.md)
 
-[2.9.1 Sprint Planning](docs/02_Projektorganisation/sprint03/planning.md)
+[2.8.2 Backlog Refinement](docs/02_Projektorganisation/sprint03/refinement.md)
 
-[2.9.2 Backlog Refinement](docs/02_Projektorganisation/sprint03/refinement.md)
+[2.8.3 Sprint Review](docs/02_Projektorganisation/sprint03/review.md)
 
-[2.9.3 Sprint Review](docs/02_Projektorganisation/sprint03/review.md)
-
-[2.9.4 Sprint Retro](docs/02_Projektorganisation/sprint03/retro.md)
+[2.8.4 Sprint Retro](docs/02_Projektorganisation/sprint03/retro.md)
 
 [3. Camunda](docs/03_Learningpath/index.md)
 
-[4. Business Process](docs/04_Zertifizierungsfragen/index.md)
+[3.1 What's Camunda](docs/03_Camunda/whats_camunda.md)
 
-[5. AWS integration](docs/05_Hands-on-Projekte/index.md)
+[3.2 Camunda 7 vs. Camunda 8](docs/03_Camunda/version7_vs_8.md)
+
+[3.3 AWS integration](docs/03_Camunda/aws_integration.md)
+
+[3.4 Genehmigungsprozesse Camunda](docs/03_Camunda/approval.md)
+
+[3.5 Decision Model and Notation - DMN](docs/03_Camunda/dmn.md)
+
+[3.6 Benachrichtigungen](docs/03_Camunda/notifications.md)
+
+[4. Business Process](docs/04_Business_Process/index.md)
+
+[4.1 Anforderungen](docs/04_Business_Process/01_anforderungen.md)
+
+[4.2 Datenaustausch mit AWS SQS](docs/04_Business_Process/02_data_exchange.md)
+
+[4.3 Business Process Model](docs/04_Business_Process/03_bpm.md)
+
+[4.4 Camunda Integration](docs/04_Business_Process/04_camunda_integration.md)
+
+[4.5 Deployment](docs/04_Business_Process/05_deployment.md)
+
+[4.6 Testing](docs/04_Business_Process/06_testing.md)
+
+[5. Fazit und Zusammenfassung](docs/05_fazit/index.md)
 
 ## Literaturverzeichnis
 
