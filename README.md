@@ -1,5 +1,8 @@
 # Semesterarbeit 02 - Business Process Management
 
+[![Deploy Camunda Resources](https://github.com/Cloud-native-engineering/sem02_bpm/actions/workflows/camunda.yml/badge.svg)](https://github.com/Cloud-native-engineering/sem02_bpm/actions/workflows/camunda.yml)
+[![pages-build-deployment](https://github.com/Cloud-native-engineering/sem02_bpm/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Cloud-native-engineering/sem02_bpm/actions/workflows/pages/pages-build-deployment)
+
 Das Management von AWS-Ressourcen, insbesondere die Erstellung und Bereitstellung von EC2-Instanzen, erfordert eine detaillierte Planung und umfassende Kenntnisse. Dieser Prozess kann zeitaufwendig sein und erfordert manuelle Eingriffe, was zu potenziellen Fehlern und Ineffizienzen führen kann. Die Problemstellung dieser Arbeit besteht darin, wie man den Prozess der EC2-Instanzerstellung in der AWS-Cloud optimieren und automatisieren kann, indem die Camunda-Engine als zentrales Instrument für das Prozessmanagement und die Automatisierung eingesetzt wird. Der Fokus liegt auf der Nutzung von Camunda, um den Prozess der EC2-Instanzerstellung effizienter und kontrollierbarer zu gestalten.
 
 ![2023_coverImage](resources/images/2023_Sem02_CoverImage.svg)
