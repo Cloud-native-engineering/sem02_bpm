@@ -12,4 +12,4 @@ Während dem Backlog Refinement wurde auf das Backlog geschaut, Ticket erstellt 
 
 ## Anpassungen
 
->TBD
+Es sind keine weiteren Anpassungen erforderlich, da alle benötigten Aufgaben und Tickets bereits vorhanden sind. Da dies der letzte Sprint ist, werden keine zusätzlichen Tickets erstellt.
