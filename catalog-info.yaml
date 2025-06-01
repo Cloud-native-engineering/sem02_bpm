@@ -1,0 +1,32 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: sem02-docs
+  title: "sem02-docs"
+  description: "Documentation for the BPMN"
+  tags:
+    - docs
+    - bpmn
+    - camunda
+  owner: Yves
+  links:
+    - url: https://cloud-native-engineering.github.io/sem02_bpm
+      title: Documentation Site
+    - url: https://github.com/Cloud-native-engineering/sem02_bpm
+      title: GitHub Repository
+spec:
+  type: documentation
+  owner: Yves
+  lifecycle: production
+  system: sem02-system
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: sem02-system
+  title: "Semester thesis 02"
+  description: "Business Process Management with Camunda to order an virtual machine"
+  owner: Yves
+spec:
+  owner: Yves
+  domain: default
